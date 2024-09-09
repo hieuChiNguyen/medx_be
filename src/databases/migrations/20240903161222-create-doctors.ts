@@ -16,12 +16,12 @@ module.exports = {
 
       email: {
         type: Sequelize.STRING,
-        field: 'full_name',
+        field: 'email',
         allowNull: false,
       },
 
       password: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING,
         field: 'password',
         allowNull: false,
       },
@@ -29,6 +29,12 @@ module.exports = {
       phone: {
         type: Sequelize.STRING(20),
         field: 'phone',
+        allowNull: false,
+      },
+
+      birthday: {
+        type: Sequelize.DATE,
+        field: 'birthday',
         allowNull: false,
       },
 
@@ -48,6 +54,12 @@ module.exports = {
         type: Sequelize.STRING,
         field: 'citizen_number',
         allowNull: false,
+      },
+
+      description: {
+        type: Sequelize.TEXT,
+        field: 'description',
+        allowNull: true,
       },
 
       positionId: {

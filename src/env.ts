@@ -21,6 +21,7 @@ export const env = {
   appPath: __dirname,
   app: {
     name: getOsEnv('APP_NAME'),
+    url: getOsEnv('APP_URL'),
     urlApi: getOsEnv('APP_URL_API'),
     version: (pkg as any).version,
     description: (pkg as any).description,
@@ -69,6 +70,7 @@ export const env = {
     defaultProvider: getOsEnv('AUTH_DEFAULT_PROVIDER'),
     jwtSecret: getOsEnv('JWT_SECRET'),
     adminJwtSecret: getOsEnv('ADMIN_JWT_SECRET'),
+    expiresIn: getOsEnv('EXPIRES_IN'),
   },
   cors: {
     origin: getOsEnv('ORIGIN'),

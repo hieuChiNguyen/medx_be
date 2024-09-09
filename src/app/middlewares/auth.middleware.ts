@@ -1,13 +1,15 @@
 import { NextFunction, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { HttpException } from '@exceptions/http.exception';
-import { DataStoredInJwtToken, RequestWithAdmin } from '@interfaces/auth.interface';
+import { DataStoredInJwtToken, RequestWithUser } from '@interfaces/auth.interface';
 import { env } from '@env';
-import AdminEntity from '@models/entities/admins.entity';
+import Doctor from '@models/entities/doctors.entity';
+import Patient from '@models/entities/patients.entity';
+import Receptionist from '@models/entities/receptionists.entity';
 import { logger } from '@common/utils/logger';
 
-function adminMiddleware() {
-  return async (req: RequestWithAdmin, res: Response, next: NextFunction) => {
+function authMiddleware() {
+  return async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
       const Authorization =
         req.cookies['Authorization'] ||
@@ -17,16 +19,17 @@ function adminMiddleware() {
         next(new HttpException(401, 'Authentication token missing'));
       }
 
-      const secretKey: string = env.auth.adminJwtSecret;
+      const secretKey: string = env.auth.jwtSecret;
 
       const verificationResponse = verify(Authorization, secretKey) as DataStoredInJwtToken;
 
-      const adminId = verificationResponse.id;
+      const userId = verificationResponse.id;
 
-      const admin = await AdminEntity.findByPk(adminId);
+      const user =
+        (await Doctor.findByPk(userId)) || (await Patient.findByPk(userId)) || (await Receptionist.findByPk(userId));
 
-      if (admin) {
-        req.admin = admin;
+      if (user) {
+        req.user = user;
 
         next();
       } else {
@@ -34,9 +37,9 @@ function adminMiddleware() {
       }
     } catch (error) {
       logger.error(`Authentication failed: ${error.message}`);
-      next(new HttpException(401, error.message));
+      next(new HttpException(401, 'Wrong authentication token'));
     }
   };
 }
 
-export default adminMiddleware;
+export default authMiddleware;

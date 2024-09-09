@@ -1,9 +1,9 @@
 import { HttpException } from '@exceptions/http.exception';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { env } from '@env';
 import { ApiResponse } from '@interfaces/response.interface';
 
-const errorMiddleware = (error: HttpException, req: Request, res: Response) => {
+const errorMiddleware = (error: HttpException, req: Request, res: Response, next: NextFunction) => {
   const code = error.status || 500;
   const message = error.message || 'middleware.something_wrong';
 

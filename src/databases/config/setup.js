@@ -3,7 +3,7 @@
 
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}.local`,
-})
+});
 
 module.exports = {
   development: {
@@ -38,4 +38,4 @@ module.exports = {
     dialect: process.env.DB_CONNECTION,
     logging: process.env.DB_LOGGING === 'true',
   },
-}
+};

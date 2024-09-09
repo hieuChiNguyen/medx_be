@@ -69,7 +69,7 @@ class App {
     useExpressServer(this.app, {
       defaultErrorHandler: false,
       routePrefix: '/api/v1',
-      middlewares: [path.join(__dirname, '/app/middleware/*')],
+      middlewares: [path.join(__dirname, '/app/middlewares/*')],
       controllers: [path.join(__dirname, '/app/controllers/*')],
     });
   }

@@ -30,7 +30,7 @@ export default class Appointment extends Model<Appointment> {
   patientId: number;
 
   @Column
-  @ForeignKey(() => Patient)
+  @ForeignKey(() => Doctor)
   doctorId!: number;
 
   @Column
